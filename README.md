@@ -5,7 +5,7 @@ Dockerfile for hasura/graphql-engine to run on ARMv7
 ```bash
 git clone https://github.com/b0hr/graphql-engine-armv7
 cd graphql-engine-armv7
-docker build -t b0hr/graphql-engine-armv7 .
+docker build -t rebot/graphql-engine-armv7 .
 ```
 
 # Start a Hasura instance on ARMv7

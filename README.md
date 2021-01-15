@@ -1,20 +1,20 @@
-# graphql-engine-arm64
-Dockerfile for hasura/graphql-engine to run on arm64/aarch64 (tested on Nvidia Jetson Nano, Rpi4)
+# graphql-engine-armv7
+Dockerfile for hasura/graphql-engine to run on ARMv7
 
 # Build from source (or skip this step to pull image from hub.docker.com)
 ```bash
-git clone https://github.com/melehin/graphql-engine-arm64
-cd graphql-engine-arm64
-docker build -t fedormelexin/graphql-engine-arm64 .
+git clone https://github.com/b0hr/graphql-engine-armv7
+cd graphql-engine-armv7
+docker build -t b0hr/graphql-engine-armv7 .
 ```
 
-# Start a Hasura instance on aarch64
+# Start a Hasura instance on ARMv7
 ```bash
 docker run -d -p 8080:8080 \
   -e HASURA_GRAPHQL_DATABASE_URL=postgres://username:password@hostname:port/dbname \
   -e HASURA_GRAPHQL_ENABLE_CONSOLE=true \
   -e HASURA_GRAPHQL_ADMIN_SECRET=myadminsecretkey \
-  fedormelexin/graphql-engine-arm64
+  fedormelexin/graphql-engine-armv7
 ```
 
 Hasura Console will be available at http://localhost:8080
@@ -30,7 +30,7 @@ services:
     volumes:
     - db_data:/var/lib/postgresql/data
   graphql-engine:
-    image: fedormelexin/graphql-engine-arm64
+    image: b0hr/graphql-engine-armv7
     ports:
     - "8080:8080"
     depends_on:

@@ -8,7 +8,7 @@ ENV LC_ALL=C.UTF-8
 WORKDIR $HASURA_ROOT
 
 # Deps
-RUN apt-get update && apt-get install -y libncurses5 git build-essential llvm9 wget libnuma-dev zlib1g-dev libpq-dev postgresql-client-common postgresql-client libkrb5-dev libssl-dev
+RUN apt-get update && apt-get install -y libncurses5 git build-essential llvm-9 wget libnuma-dev zlib1g-dev libpq-dev postgresql-client-common postgresql-client libkrb5-dev libssl-dev
 RUN wget http://downloads.haskell.org/~ghc/8.10.1/ghc-8.10.1-armv7-deb9-linux.tar.xz && \
     wget http://home.smart-cactus.org/~ben/ghc/cabal-install-3.4.0.0-rc4-armv7l-deb10.tar.xz && \
     tar -xf ghc-8.10.1-armv7-deb9-linux.tar.xz && tar -xf cabal-install-3.4.0.0-rc4-armv7l-deb10.tar.xz && \

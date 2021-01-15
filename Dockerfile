@@ -1,5 +1,5 @@
 FROM ubuntu:18.04
-LABEL maintainer="fedormelexin@gmail.com"
+LABEL maintainer="trenson.gilles@gmail.com"
 
 ARG HASURA_VER
 ENV HASURA_VER ${HASURA_VER:-1.3.3}
@@ -8,17 +8,17 @@ ENV LC_ALL=C.UTF-8
 WORKDIR $HASURA_ROOT
 
 # Deps
-RUN apt-get update && apt-get install -y libncurses5 git build-essential llvm wget libnuma-dev zlib1g-dev libpq-dev postgresql-client-common postgresql-client libkrb5-dev libssl-dev
-RUN wget https://downloads.haskell.org/~ghc/8.10.1/ghc-8.10.1-aarch64-deb9-linux.tar.xz && \
-    wget http://downloads.haskell.org/~cabal/cabal-install-3.2.0.0/cabal-install-3.2.0.0.tar.gz && \
-    tar xf ghc-8.10.1-aarch64-deb9-linux.tar.xz && tar xzf cabal-install-3.2.0.0.tar.gz && \
-    rm *.gz *.xz
+RUN apt-get update && apt-get install -y libncurses5 git build-essential llvm9 wget libnuma-dev zlib1g-dev libpq-dev postgresql-client-common postgresql-client libkrb5-dev libssl-dev
+RUN wget http://downloads.haskell.org/~ghc/8.10.1/ghc-8.10.1-armv7-deb9-linux.tar.xz && \
+    wget http://home.smart-cactus.org/~ben/ghc/cabal-install-3.4.0.0-rc4-armv7l-deb10.tar.xz && \
+    tar -xf ghc-8.10.1-armv7-deb9-linux.tar.xz && tar -xf cabal-install-3.4.0.0-rc4-armv7l-deb10.tar.xz && \
+    rm *.xz
 WORKDIR $HASURA_ROOT/ghc-8.10.1
 RUN ./configure && make install
 WORKDIR $HASURA_ROOT/
 # from https://aur.archlinux.org/cgit/aur.git/plain/ghc_8_10.patch?h=cabal-static
 COPY ghc_8_10.patch .
-WORKDIR $HASURA_ROOT/cabal-install-3.2.0.0
+WORKDIR $HASURA_ROOT/cabal-install-3.4.0.0
 RUN patch -p1 < ../ghc_8_10.patch
 RUN bash ./bootstrap.sh
 
@@ -41,7 +41,7 @@ RUN pip install gsutil
 RUN make deps server-build
 
 FROM ubuntu:18.04
-LABEL maintainer="fedormelexin@gmail.com"
+LABEL maintainer="trenson.gilles@gmail.com"
 ENV HASURA_ROOT /hasura/
 COPY --from=0 /srv/graphql-engine /srv/
 COPY --from=1 $HASURA_ROOT/static/dist/ /srv/console-assets
